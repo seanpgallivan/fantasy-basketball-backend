@@ -1,24 +1,22 @@
 class ApplicationController < ActionController::Base
   before_action :authorized
+  protect_from_forgery unless: -> { request.format.json? }
 
-  secret = 'flibbertigibbet'
+  # secret = 'flibbertigibbet'
 
   def issue_token
-    JWT.encode({user: @user.id}, secret, 'HS256')
+    JWT.encode({user: @user.id}, 'flibbertigibbet', 'HS256')
   end
 
-  def auth_header
+  def token
     request.headers['Authorization']
   end
 
   def decoded_token
-    if auth_header
-      token = auth_header.split(' ')[1]
-      begin
-        JWT.decode(token, secret, true, {:alg => 'HS256'})
-      rescue JWT::DecodeError
-        [{error: 'Invalid Token'}]
-      end
+    begin
+      JWT.decode(token, 'flibbertigibbet', true, {:alg => 'HS256'})
+    rescue JWT::DecodeError
+      [{error: 'Invalid Token'}]
     end
   end
 
@@ -34,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorized
-    render json: {message: 'Please log in'}, status: :unauthorized unless logged_in?
+    render json: {error: 'Please log in'}, status: :unauthorized unless logged_in?
   end
 
 end
