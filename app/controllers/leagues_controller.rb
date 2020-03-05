@@ -1,9 +1,14 @@
 class LeaguesController < ApplicationController
 
-  def show 
-    league = League.find(params[:id])
-    render :json => league
-  end 
+  # def index
+  #   leagues = current_user.leagues
+  #   render :json => leagues
+  # end
+
+  # def show 
+  #   league = League.find(params[:id])
+  #   render :json => league
+  # end 
 
   def create 
     league = League.create(league_params)

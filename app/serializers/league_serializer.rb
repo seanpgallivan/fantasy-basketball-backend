@@ -1,5 +1,5 @@
 class LeagueSerializer < ActiveModel::Serializer
-  attributes :id, :name, :draft_start, :round_duration, :roster_guards, :roster_forwards, :roster_centers, :roster_utility, :roster_bench, :user_id, :seed_order, :teams   
+  attributes :id, :name, :max_teams, :draft_start, :round_duration, :roster_guards, :roster_forwards, :roster_centers, :roster_utility, :roster_bench, :user_id, :seed_order, :teams   
 
   def teams
     league_teams = self.object.teams.sort_by {|team| team.created_at}

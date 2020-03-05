@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :leagues
   resources :teams
-  resources :users, only: [:create]
+  resources :users
   resources :auth, only: [:show, :create]
 end
